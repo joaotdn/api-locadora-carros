@@ -26,4 +26,8 @@ class Marca extends Model
             'imagem.mimes' => 'Formato de arquivo inválido'
         ];
     }
+
+    public function modelos() {
+        return $this->hasMany('App\Models\Modelo');
+    }
 }
