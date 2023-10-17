@@ -18,8 +18,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('cliente', 'ClienteController');
-Route::apiResource('modelo', 'ModeloController');
-Route::apiResource('carro', 'CarroController');
-Route::apiResource('locacao', 'LocacaoController');
-Route::apiResource('marca', 'MarcaController');
+Route::prefix('v1')->middleware('jwt.auth')->group(function() {
+    Route::apiResource('cliente', 'ClienteController');
+    Route::apiResource('modelo', 'ModeloController');
+    Route::apiResource('carro', 'CarroController');
+    Route::apiResource('locacao', 'LocacaoController');
+    Route::apiResource('marca', 'MarcaController');
+    Route::post('me', 'AuthController@me');
+    Route::post('refresh', 'AuthController@refresh');
+    Route::post('logout', 'AuthController@logout');
+});
+
+Route::post('login', 'AuthController@login');
